@@ -106,9 +106,6 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
         bpy.context.scene.render.filepath = tmp_output + "####"
         bpy.ops.render.render(animation=True)
 
-        
-        
-
         max_frames_row = 10.0
         frames = []
         tile_width = 0
