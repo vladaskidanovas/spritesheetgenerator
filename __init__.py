@@ -106,7 +106,6 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
         bpy.context.scene.render.filepath = tmp_output + "####"
         bpy.ops.render.render(animation=True)
 
-        max_frames_row = 10.0
         frames = []
         tile_width = 0
         tile_height = 0
@@ -116,6 +115,8 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
 
         files = os.listdir(tmp_output)
         files.sort()
+        max_frames_row = 8
+        # max_frames_row = int(math.ceil(math.sqrt(len(files))))
 
         for current_file in files :
             try:
@@ -137,8 +138,8 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
             spritesheet_width = tile_width*len(frames)
             spritesheet_height = tile_height
             
-        print(spritesheet_height)
-        print(spritesheet_width)
+        print(frames)
+        print(tile_height)
 
         spritesheet = Image.new("RGBA",(int(spritesheet_width), int(spritesheet_height)))
 
@@ -157,7 +158,8 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
         if not os.path.exists(output):
             os.makedirs(output)
             
-        spritesheet.save(output+animation_name+"_" + time.strftime("%Y-%m-%dT%H-%M-%S") + ".png", "PNG")
+        spritesheet.save(output+animation_name+"_" + time.strftime("%Y-%m-%dT%H-%M-%S") + ".png", "PNG", dpi=[300,300])
+        # spritesheet.save(output+animation_name+".png", "PNG", dpi=[300,300])
         
 
         return {'FINISHED'}
