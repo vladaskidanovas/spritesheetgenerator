@@ -58,6 +58,11 @@ bpy.types.Scene.sprite_sheet_padding = IntProperty(
     description = "Sets a padding between sprites",
     default = 1)
 
+bpy.types.Scene.sprite_sheet_image_name = StringProperty(
+    name = "Sprite Sheet Image Name",
+    description = "Save folder for sprite sheet image",
+    default = "####")
+
 bpy.types.Scene.sprite_sheet_image_output = StringProperty(
     name = "Sprite Sheet Image Folder",
     description = "Save folder for sprite sheet image",
@@ -158,7 +163,7 @@ class SSG_OT_sprite_sheet_generator(bpy.types.Operator):
         if not os.path.exists(output):
             os.makedirs(output)
             
-        spritesheet.save(output+animation_name+"_" + time.strftime("%Y-%m-%dT%H-%M-%S") + ".png", "PNG", dpi=[300,300])
+        spritesheet.save(output+animation_name+"_" + scene.sprite_sheet_image_name + ".png", "PNG", dpi=[300,300])
         # spritesheet.save(output+animation_name+".png", "PNG", dpi=[300,300])
         
 
@@ -232,6 +237,9 @@ class SSG_PT_sprite_sheet_panel(bpy.types.Panel):
 
         row = layout.row()
         row.prop(scene, 'tmp_image_output')
+
+        row = layout.row()
+        row.prop(scene, 'sprite_sheet_image_name')
 
         row = layout.row()
         row.prop(scene, 'sprite_sheet_image_output')
